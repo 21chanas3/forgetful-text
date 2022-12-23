@@ -1,2 +1,4 @@
 class Tag:
-    pass
+    def __init__(self, name, color=""):
+        self.name = name
+        self.color = color
