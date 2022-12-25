@@ -26,8 +26,6 @@ def run(args):
             print("Subject " + str(sub.id) + " added: " + args[1])
         elif len(args) < 4:
             sub_name = str(args[1])
-            sub_id = str(args[2])
-            subject = Subject.get_or_none(title=sub_name)
             sub_color = str(args[2])
             subject = Subject.get_or_none(title=sub_name)
             if subject is not None:
