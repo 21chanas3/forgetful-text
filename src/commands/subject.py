@@ -6,10 +6,10 @@ def run(args):
     if len(args) == 0:
         print("No subcommand provided")
     elif args[0] == "add":
-        if len(args) < 1:
+        if len(args) < 2:
             print("Please specify a name for the subject");
             return
-        elif len(args) < 2:
+        elif len(args) < 3:
             sub_name = str(args[1])
             subject = Subject.get_or_none(name=sub_name)
             if subject is not None:
@@ -18,7 +18,7 @@ def run(args):
             sub = Subject(title=sub_name, color="FFFFFF")
             sub.save()
             print("Subject " + str(sub.id) + " added: " + args[1])
-        elif len(args) < 3:
+        elif len(args) < 4:
             sub_name = str(args[1])
             sub_id = str(args[2])
             subject = Subject.get_or_none(name=sub_name)
