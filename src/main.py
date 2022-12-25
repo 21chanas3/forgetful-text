@@ -1,17 +1,31 @@
+import importlib
 import database as db
-import argparse
 import os
+from os import listdir
+from os.path import isfile, join
+
+COMMAND_PATH = "./commands"
+
+db.create_tables()
+
+# Dynamically load commands
+command_files = [f for f in listdir(COMMAND_PATH) if isfile(join(COMMAND_PATH, f)) and f.split(".")[1] == "py"]
+commands = {}
+for file in command_files:
+    name = os.path.basename(file).split(".")[0]
+    module = importlib.import_module("commands." + name)
+    commands.update({name: module})
 
 os.system('title Forgetful')
-db.create_tables()
 print("Welcome to Forgetful")
 
 while True:
-    text = input("> ")
-    if text == "exit":
+    text = input("> ").split(" ")
+    if text[0] == "exit":
         break
+    elif text[0] in commands:
+        module = commands.get(text[0])
+        text.pop(0)
+        print("Running " + module.__name__) # Placeholder, should call .run of each module with args
     else:
-        argparse.parser(text)
-
-
-
+        print("No such command! Use 'help' to view all commands or 'exit' to exit the program")
