@@ -1,12 +1,13 @@
 import importlib
-import database as db
+import models
 import os
 from os import listdir
 from os.path import isfile, join
 
 COMMAND_PATH = "./commands"
 
-db.create_tables()
+# Create database interface
+models.initialize()
 
 # Dynamically load commands
 command_files = [f for f in listdir(COMMAND_PATH) if isfile(join(COMMAND_PATH, f)) and f.split(".")[1] == "py"]
