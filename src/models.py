@@ -31,7 +31,7 @@ class TaskTag(BaseModel):
 
 
 class Subject(BaseModel):
-    title = TextField()
+    title = TextField(unique=True)
     color = TextField()
 
 
