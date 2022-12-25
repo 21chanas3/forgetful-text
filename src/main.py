@@ -26,6 +26,6 @@ while True:
     elif text[0] in commands:
         module = commands.get(text[0])
         text.pop(0)
-        print("Running " + module.__name__) # Placeholder, should call .run of each module with args
+        module.run(text)
     else:
         print("No such command! Use 'help' to view all commands or 'exit' to exit the program")
