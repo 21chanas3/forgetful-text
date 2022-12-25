@@ -3,6 +3,7 @@ import models
 import os
 from os import listdir
 from os.path import isfile, join
+import shlex
 
 COMMAND_PATH = "./commands"
 
@@ -21,7 +22,8 @@ os.system('title Forgetful')
 print("Welcome to Forgetful")
 
 while True:
-    text = input("> ").split(" ")
+    text = input("> ")
+    text = shlex.split(text)
     if text[0] == "exit":
         break
     elif text[0] in commands:
