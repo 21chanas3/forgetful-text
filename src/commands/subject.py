@@ -11,7 +11,7 @@ def run(args):
             return
         elif len(args) < 3:
             sub_name = str(args[1])
-            subject = Subject.get_or_none(name=sub_name)
+            subject = Subject.get_or_none(title=sub_name)
             if subject is not None:
                 print("Subject already exist within database")
                 return
@@ -21,7 +21,7 @@ def run(args):
         elif len(args) < 4:
             sub_name = str(args[1])
             sub_id = str(args[2])
-            subject = Subject.get_or_none(name=sub_name)
+            subject = Subject.get_or_none(title=sub_name)
             if subject is not None:
                 print("Subject already exist within database")
                 return
