@@ -7,29 +7,29 @@ class BaseModel(Model):
         database = db
 
 
-class Tasks(BaseModel):
+class Task(BaseModel):
     title = TextField()
-    description = TextField()
-    complete = BooleanField()
-    due_date = DateTimeField()
-    do_date = DateTimeField()
-    due_time = BooleanField()
-    do_time = BooleanField()
-    priority = IntegerField()
-    subject_id = IntegerField()
+    description = TextField(null=True)
+    complete = BooleanField(default=False)
+    due_date = DateTimeField(null=True)
+    do_date = DateTimeField(null=True)
+    due_time = BooleanField(null=True)
+    do_time = BooleanField(null=True)
+    priority = IntegerField(default=4)
+    subject_id = IntegerField(null=True)
 
 
-class Tags(BaseModel):
+class Tag(BaseModel):
     title = TextField()
     color = TextField()
 
 
-class TaskTags(BaseModel):
+class TaskTag(BaseModel):
     task_id = IntegerField()
     tag_id = IntegerField()
 
 
-class Subjects(BaseModel):
+class Subject(BaseModel):
     title = TextField()
     color = TextField()
 
@@ -40,6 +40,6 @@ if __name__ == "__main__":
 
 def initialize():
     db.connect()
-    db.create_tables([Tasks, Tags, TaskTags, Subjects])
+    db.create_tables([Task, Tag, TaskTag, Subject])
 
 
