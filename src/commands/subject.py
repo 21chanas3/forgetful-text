@@ -13,7 +13,7 @@ def run(args):
                 print("Too few arguments")
                 return
             elif len(args) < 2:
-                print("Please specify a name for the subject");
+                print("Please specify a name for the subject")
                 return
             elif len(args) < 3:
                 sub_name = str(args[1])
@@ -26,8 +26,6 @@ def run(args):
                 print("Subject " + str(sub.id) + " added: " + args[1])
             elif len(args) < 4:
                 sub_name = str(args[1])
-                sub_id = str(args[2])
-                subject = Subject.get_or_none(title=sub_name)
                 sub_color = str(args[2])
                 subject = Subject.get_or_none(title=sub_name)
                 if subject is not None:
@@ -94,5 +92,5 @@ def run(args):
                 table.add_row([subs, subs.title, subs.color])
             print(table)
         case _:
-        print("Invalid subcommand")
+            print("Invalid subcommand")
 
