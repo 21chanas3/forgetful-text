@@ -9,7 +9,7 @@ def run(args):
         print("No subcommand provided")
     match args[0]:
         case 'add':
-            if len(args) < 1:
+            if len(args) == 1:
                 print("Too few arguments")
                 return
             elif len(args) < 2:

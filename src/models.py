@@ -9,7 +9,7 @@ class BaseModel(Model):
 
 
 class Task(BaseModel):
-    title = TextField()
+    title = TextField(unique=True)
     description = TextField(null=True)
     complete = BooleanField(default=False)
     due_date = DateTimeField(null=True)
@@ -21,7 +21,7 @@ class Task(BaseModel):
 
 
 class Tag(BaseModel):
-    title = TextField()
+    title = TextField(unique=True)
     color = TextField()
 
 
