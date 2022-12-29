@@ -48,12 +48,11 @@ def run(args):
             if tag is None:
                 print("No tag is named " + str(tag_name))
                 return
-            tag = Tag.get(Tag.title == args[1])
-            task_tags = TaskTag.get(TaskTag.task_id == tag)
-            count_task = 0
-            for count_task, task in enumerate(task_tags):
-                task.delete_instance()
-            print("Tag " + str(args[1]) + " deleted! " + str(count_task) + " tasks were unassigned from " + str(args[1]))
+            task_tags = TaskTag.select().where(TaskTag.tag_id == tag)
+            if task_tags is not None:
+                for task_tags, task in enumerate(task_tags):
+                    task.delete_instance()
+            print("Tag " + args[1] + " deleted! ")
         case 'edit':
             if len(args) > 6:
                 print("Too many arguments")
