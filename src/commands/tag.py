@@ -10,6 +10,7 @@
 import peewee
 from models import Tag, Task, TaskTag
 from prettytable import PrettyTable
+import re
 
 
 def run(args):
@@ -30,6 +31,10 @@ def run(args):
                 return
             if len(args) == 3:
                 tag_color = str(args[2])
+                valid_colour = re.match("^([A-Fa-f0-9]{6})$", tag_color)
+                if not valid_colour:
+                    print("Invalid colour")
+                    return
                 tag = Tag(title=tag_name, color=tag_color)
             else:
                 tag = Tag(title=tag_name, color="FFFFFF")
@@ -43,7 +48,7 @@ def run(args):
             if tag is None:
                 print("No tag is named " + str(tag_name))
                 return
-            query = Tag.delete().where(Tag.title == tag_name)
+            # delete by cascade
             query.execute()
             print("Tag " + str(tag.title) + " removed")
         case 'edit':
@@ -109,25 +114,24 @@ def _check_tag(args):
 def _parser_edit(args, tag_name):
     match args[0]:
         case '-name':
-            if len(args) > 2:
-                _parser_edit(args[3:], tag_name)
-                return  # assuming recursive call inserts in database
             tag_new_name = str(args[1])
+            if len(args) > 2:
+                _parser_edit(args[2:], tag_name)
             tag = Tag.get_or_none(title=tag_name)
             if tag is None:
                 print("No tag is named " + str(tag_name))
                 return
             query = Tag.update(title=tag_new_name).where(Tag.title == tag_name)
             query.execute()
-            print("Name changed")
+            print("Edits were made to " + str(tag_name))
             return
         case '-color':
-            if len(args) > 2:
-                _parser_edit(args[3:], tag_name)
-                return
             tag_color = str(args[1])
-            query = Tag.update(title=tag_color).where(Tag.title == tag_name)
+            query = Tag.update(color=tag_color).where(Tag.title == tag_name)
             query.execute()
+            if len(args) > 2:
+                _parser_edit(args[2:], tag_name)
+            print("Edits were made to " + str(tag_name))
             return
         case _:
             return None
