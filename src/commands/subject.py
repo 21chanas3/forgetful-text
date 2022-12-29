@@ -1,4 +1,4 @@
-from models import Subject
+from models import Subject, Task
 from prettytable import PrettyTable
 import re
 
@@ -90,6 +90,24 @@ def run(args):
             table.field_names = ["ID", "Name", "Color"]
             for subs in Subject.select():
                 table.add_row([subs, subs.title, subs.color])
+            print(table)
+        case "view":
+            if len(args) > 2:
+                print("Too many arguments")
+                return
+            elif len(args) < 1:
+                print("Too few arguments")
+                return
+            sub_name = str(args[1])
+            subject = Subject.get_or_none(title=sub_name)
+            if subject is None:
+                print("Subject does not exist within database")
+                return
+            subject = Subject.get(Subject.title == sub_name)
+            print(subject.title)
+            table.field_names = ["ID", "Complete", "Due Date", "Task Name", "Priority", "Do Date"]
+            for task in Task.select().where(Task.subject_id == subject.title):
+                table.add_row([task, task.complete, task.due_date, task.title, task.priority, task.do_date])
             print(table)
         case _:
             print("Invalid subcommand")

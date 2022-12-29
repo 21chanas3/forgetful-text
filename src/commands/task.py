@@ -1,10 +1,12 @@
 from models import Task
 from datetime import datetime
+from prettytable import PrettyTable
 
 flags = ['-n', '-d', '-due', '-do', '-p', '-s']
 
 
 def run(args):
+    table = PrettyTable()
     if len(args) == 0:
         print('No subcommand provided')
         return
@@ -91,7 +93,7 @@ def _set_field(task, field, value):
         case '-p':
             task.priority = value
         case '-s':
-            task.subject = value
+            task.subject_id = value
         case _:
             return None
     return task
