@@ -1,11 +1,26 @@
 from models import Task
 from prettytable import PrettyTable
 from datetime import datetime, timedelta
-from peewee import fn
 
 
 def run(args):
+    """
+    :param args:
+    :return:
+    """
+
+    # checks valid number of args
+    if len(args) < 1:
+        print("Too few arguments")
+        return
+
+    if len(args) > 1:
+        print("Too many arguments")
+        return
+
     table = PrettyTable()
+
+    # Check the subcommand and update the table
     match args[0]:
         case 'duedate':
             table.field_names = ["ID", "Complete", "Due Date", "Task Name", "Priority", "Do Date"]
@@ -30,5 +45,5 @@ def run(args):
                     order_by(Task.do_date):
                 table.add_row([task, task.complete, task.do_date, task.title, task.priority, task.due_date])
             print(table)
-        case _:
-            pass
+        case _:  # subcommand is not recognized
+            print("There is no such subcommand for view")
