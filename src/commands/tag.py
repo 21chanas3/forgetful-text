@@ -68,13 +68,31 @@ def run(args):
                 return
             task, tag = _check_tag(args)
             query = TaskTag.delete().where((TaskTag.task_id == task.id) & (TaskTag.tag_id == tag.id))
-            query.execute() # save changes to tag
+            query.execute()  # save changes to tag
             print("Tag: " + str(tag.title) + " is unassigned from " + str(task.title))
         case 'view':
             table.field_names = ["ID", "Name", "Color"]
             for tags in Tag.select():
                 table.add_row([tags, tags.title, tags.color])
             print(table)
+        case 'help':
+            print('Usage: tag [subcommand] <options>\n'
+                  '\n'
+                  'Subcommands:\n'
+                  '\n'
+                  '  add [title] <color>       Add a new tag\n'
+                  '  remove [title]            Remove a tag by title\n'
+                  '  edit [title] <options>    Edit a tag by title\n'
+                  '  assign [task ID] [title]  Assign a tag to a task\n'
+                  '  unassign [task ID] [title] Unassign a tag from a task\n'
+                  '  view                      View all tags\n'
+                  '  help                      Display this help message\n'
+                  '\n'
+                  'Options:\n'
+                  '\n'
+                  '  -name [new name]       Change the name of the tag\n'
+                  '  -color [color hex code] Change the color of the tag (e.g. FF0000 for red)\n'
+                  '\n')
         case _:
             print("Invalid Subcommand")
 
